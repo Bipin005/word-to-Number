@@ -1,1 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Word → Code Converter (KANPURCITY)</title>
+  <style>
+    :root { --bg:#0f1724; --card:#0b1220; --accent:#2dd4bf; --muted:#94a3b8; --text:#e6eef6; }
+    *{box-sizing:border-box;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial}
+    body{margin:0;min-height:100vh;background:linear-gradient(180deg,#071028 0%, #071b2a 100%);display:flex;align-items:center;justify-content:center;padding:24px;color:var(--text)}
+    .card{width:100%;max-width:480px;background:var(--card);border-radius:12px;padding:22px;box-shadow:0 8px 30px rgba(2,6,23,.6);border:1px solid rgba(255,255,255,.03)}
+    h1{margin:0 0 6px;font-size:20px;letter-spacing:0.2px}
+    p.small{margin:0 0 18px;color:var(--muted);font-size:13px}
+    .row{display:flex;gap:10px}
+    input[type="text"]{flex:1;padding:12px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.04);background:#07182a;color:var(--text);font-size:16px;outline:none}
+    button{padding:11px 16px;border-radius:8px;border:0;background:var(--accent);color:#042026;font-weight:700;cursor:pointer}
+    .result{margin-top:16px;padding:12px;border-radius:8px;background:rgba(255,255,255,.02);font-size:18px;min-height:44px;display:flex;align-items:center}
+    .map{margin-top:14px;color:var(--muted);font-size:13px}
+    footer{margin-top:14px;color:var(--muted);font-size:12px;text-align:center}
+    .note{color:#ffd166;font-size:13px;margin-top:8px}
+    .copy {margin-left:8px;padding:6px 8px;border-radius:6px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.03);cursor:pointer}
+  </style>
+</head>
+<body>
+  <div class="card" role="main">
+    <h1>Word → Code Converter</h1>
+    <p class="small">Type any letters from <strong>K A N P U R C I T Y</strong>. The app will convert each letter to its secret digit using the KANPURCITY mapping.</p>
+
+    <div class="row" style="align-items:center">
+      <input id="wordInput" type="text" placeholder="Enter letters (e.g. KAN or ANP or CITY)" aria-label="Word input">
+      <button id="convertBtn">Convert</button>
+    </div>
+
+    <div class="result" id="output">Output will appear here</div>
+
+    <div class="map"><strong>Mapping:</strong> K→0, A→1, N→2, P→3, U→4, R→5, C→6, I→7, T→8, Y→9</div>
+    <div class="note">Unknown letters will show as <code>?</code>. Input is case-insensitive.</div>
+
+    <div style="display:flex;gap:8px;margin-top:12px;align-items:center">
+      <button id="copyBtn" class="copy">Copy result</button>
+      <button id="clearBtn" class="copy">Clear</button>
+    </div>
+
+    <footer>Made for personal use — share the page link with friends.</footer>
+  </div>
+
+<script>
+  // mapping for KANPURCITY
+  const mapping = {
+    'K':'0','A':'1','N':'2','P':'3','U':'4','R':'5','C':'6','I':'7','T':'8','Y':'9'
+  };
+
+  const input = document.getElementById('wordInput');
+  const out = document.getElementById('output');
+  const btn = document.getElementById('convertBtn');
+  const copyBtn = document.getElementById('copyBtn');
+  const clearBtn = document.getElementById('clearBtn');
+
+  function convertWordToCode(word) {
+    if (!word) return 'Enter some letters';
+    word = word.toUpperCase().replace(/\s+/g,'');
+    let res = '';
+    for (let ch of word) {
+      res += mapping[ch] ?? '?';
+    }
+    return res;
+  }
+
+  btn.addEventListener('click', () => {
+    const val = input.value.trim();
+    const code = convertWordToCode(val);
+    out.textContent = 'Output: ' + code;
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') btn.click();
+  });
+
+  copyBtn.addEventListener('click', async () => {
+    const text = out.textContent.replace(/^Output:\s*/,'');
+    try {
+      await navigator.clipboard.writeText(text);
+      copyBtn.textContent = 'Copied!';
+      setTimeout(()=> copyBtn.textContent = 'Copy result', 1200);
+    } catch (err) {
+      copyBtn.textContent = 'Copy failed';
+      setTimeout(()=> copyBtn.textContent = 'Copy result', 1200);
+    }
+  });
+
+  clearBtn.addEventListener('click', () => {
+    input.value = '';
+    out.textContent = 'Output will appear here';
+    input.focus();
+  });
+
+  // optional: show live update as user types (uncomment if preferred)
+  // input.addEventListener('input', () => {
+  //   out.textContent = 'Output: ' + convertWordToCode(input.value);
+  // });
+</script>
+</body>
+</html>
 
