@@ -20,6 +20,12 @@
     .note{color:#ffd166;font-size:13px;margin-top:8px}
     .copy {margin-left:8px;padding:6px 8px;border-radius:6px;background:var(--accent);border:1px solid #042026;cursor:pointer}
   </style>
+  <link rel="manifest" href="manifest.json">
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+    }
+  </script>
 </head>
 <body>
   <div class="card" role="main">
