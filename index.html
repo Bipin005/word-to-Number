@@ -164,49 +164,70 @@
   </div>
 
 <script>
-    const mapping = {
-      'K': '0', 'A': '1', 'N': '2', 'P': '3', 'U': '4', 'R': '5', 'C': '6', 'I': '7', 'T': '8', 'Y': '9'
-    };
+  const mapping = {
+    'K':'0','A':'1','N':'2','P':'3','U':'4','R':'5','C':'6','I':'7','T':'8','Y':'9'
+  };
 
-    const input = document.getElementById('wordInput');
-    const out = document.getElementById('output');
-    const copyBtn = document.getElementById('copyBtn');
-    const clearBtn = document.getElementById('clearBtn');
+  // reverse mapping for numbers → letters
+  const reverseMapping = Object.fromEntries(
+    Object.entries(mapping).map(([k, v]) => [v, k])
+  );
 
-    function convertWordToCode(word) {
-      if (!word) return 'Enter some letters';
-      word = word.toUpperCase().replace(/\s+/g, '');
-      let res = '';
+  const input = document.getElementById('wordInput');
+  const out = document.getElementById('output');
+  const copyBtn = document.getElementById('copyBtn');
+  const clearBtn = document.getElementById('clearBtn');
+
+  function convertWordToCode(word) {
+    if (!word) return 'Enter some letters or numbers';
+    word = word.toUpperCase().replace(/\s+/g,'');
+
+    // check if input is numeric
+    const isNumeric = /^[0-9]+$/.test(word);
+    let res = '';
+
+    if (isNumeric) {
+      // convert numbers → letters
+      for (let ch of word) {
+        res += reverseMapping[ch] ?? '?';
+      }
+    } else {
+      // convert letters → numbers
       for (let ch of word) {
         res += mapping[ch] ?? '?';
       }
-      return res;
     }
 
-    // 👇 new logic: auto convert when typing
-    input.addEventListener('input', () => {
-      const val = input.value.trim();
-      const code = convertWordToCode(val);
-      out.textContent = 'Output: ' + code;
-    });
+    return res;
+  }
 
-    copyBtn.addEventListener('click', async () => {
-      const text = out.textContent.replace(/^Output:\s*/, '');
-      try {
-        await navigator.clipboard.writeText(text);
-        copyBtn.textContent = 'Copied!';
-        setTimeout(() => copyBtn.textContent = 'Copy result', 1200);
-      } catch (err) {
-        copyBtn.textContent = 'Copy failed';
-        setTimeout(() => copyBtn.textContent = 'Copy result', 1200);
-      }
-    });
+  // Auto convert as user types
+  input.addEventListener('input', () => {
+    const val = input.value.trim();
+    const code = convertWordToCode(val);
+    out.textContent = 'Output: ' + code;
+  });
 
-    clearBtn.addEventListener('click', () => {
-      input.value = '';
-      out.textContent = 'Output will appear here';
-      input.focus();
-    });
-  </script>
+  // Copy button
+  copyBtn.addEventListener('click', async () => {
+    const text = out.textContent.replace(/^Output:\s*/,'');
+    try {
+      await navigator.clipboard.writeText(text);
+      copyBtn.textContent = 'Copied!';
+      setTimeout(()=> copyBtn.textContent = 'Copy result', 1200);
+    } catch {
+      copyBtn.textContent = 'Copy failed';
+      setTimeout(()=> copyBtn.textContent = 'Copy result', 1200);
+    }
+  });
+
+  // Clear button
+  clearBtn.addEventListener('click', () => {
+    input.value = '';
+    out.textContent = 'Output will appear here';
+    input.focus();
+  });
+</script>
+
 </body>
 </html>
