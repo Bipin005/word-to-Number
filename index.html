@@ -2,335 +2,336 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Word Converter + Smart Calculator | by Bipin</title>
-  <style>
-    :root {
-      --bg: #0f1724;
-      --card: #0b1220;
-      --accent: #2dd4bf;
-      --muted: #94a3b8;
-      --text: #e6eef6;
-    }
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Word Converter + Smart Calculator | by Bipin</title>
+    <style>
+        :root {
+            --bg: #0f1724;
+            --card: #0b1220;
+            --accent: #2dd4bf;
+            --muted: #94a3b8;
+            --text: #e6eef6;
+        }
 
-    * {
-      box-sizing: border-box;
-      font-family: Inter, system-ui, Segoe UI, Roboto, Arial
-    }
+        * {
+            box-sizing: border-box;
+            font-family: Inter, system-ui, Segoe UI, Roboto, Arial
+        }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: linear-gradient(180deg, #071028 0%, #071b2a 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      color: var(--text)
-    }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(180deg, #071028 0%, #071b2a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            color: var(--text)
+        }
 
-    .card {
-      width: 100%;
-      max-width: 480px;
-      background: var(--card);
-      border-radius: 12px;
-      padding: 22px;
-      box-shadow: 0 8px 30px rgba(2, 6, 23, .6);
-      border: 1px solid rgba(255, 255, 255, .03)
-    }
+        .card {
+            width: 100%;
+            max-width: 480px;
+            background: var(--card);
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 8px 30px rgba(2, 6, 23, .6);
+            border: 1px solid rgba(255, 255, 255, .03)
+        }
 
-    h1 {
-      margin: 0 0 6px;
-      font-size: 20px;
-      text-align: center;
-      letter-spacing: 0.2px
-    }
+        h1 {
+            margin: 0 0 6px;
+            font-size: 20px;
+            text-align: center;
+            letter-spacing: 0.2px
+        }
 
-    p.small {
-      margin: 0 0 18px;
-      color: var(--muted);
-      font-size: 13px;
-      text-align: center
-    }
+        p.small {
+            margin: 0 0 18px;
+            color: var(--muted);
+            font-size: 13px;
+            text-align: center
+        }
 
-    .tabs {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      margin-bottom: 20px
-    }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px
+        }
 
-    .tab {
-      padding: 10px 18px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, .1);
-      cursor: pointer;
-      font-weight: 600;
-      background: rgba(255, 255, 255, .03);
-      color: var(--muted)
-    }
+        .tab {
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, .1);
+            cursor: pointer;
+            font-weight: 600;
+            background: rgba(255, 255, 255, .03);
+            color: var(--muted)
+        }
 
-    .tab.active {
-      background: var(--accent);
-      color: #042026;
-      border: 0
-    }
+        .tab.active {
+            background: var(--accent);
+            color: #042026;
+            border: 0
+        }
 
-    .hidden {
-      display: none
-    }
+        .hidden {
+            display: none
+        }
 
-    .row {
-      display: flex;
-      gap: 10px
-    }
+        .row {
+            display: flex;
+            gap: 10px
+        }
 
-    input[type="text"] {
-      flex: 1;
-      padding: 12px 14px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, .04);
-      background: #07182a;
-      color: var(--text);
-      font-size: 16px;
-      outline: none
-    }
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, .04);
+            background: #07182a;
+            color: var(--text);
+            font-size: 16px;
+            outline: none
+        }
 
-    button {
-      padding: 11px 16px;
-      border-radius: 8px;
-      border: 0;
-      background: var(--accent);
-      color: #042026;
-      font-weight: 700;
-      cursor: pointer
-    }
+        button {
+            padding: 11px 16px;
+            border-radius: 8px;
+            border: 0;
+            background: var(--accent);
+            color: #042026;
+            font-weight: 700;
+            cursor: pointer
+        }
 
-    .result {
-      margin-top: 16px;
-      padding: 12px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, .02);
-      font-size: 18px;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center
-    }
+        .result {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .02);
+            font-size: 18px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
 
-    .map {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 13px;
-      text-align: center
-    }
+        .map {
+            margin-top: 14px;
+            color: var(--muted);
+            font-size: 13px;
+            text-align: center
+        }
 
-    footer {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 12px;
-      text-align: center
-    }
+        footer {
+            margin-top: 14px;
+            color: var(--muted);
+            font-size: 12px;
+            text-align: center
+        }
 
-    .note {
-      color: #ffd166;
-      font-size: 13px;
-      margin-top: 8px;
-      text-align: center
-    }
+        .note {
+            color: #ffd166;
+            font-size: 13px;
+            margin-top: 8px;
+            text-align: center
+        }
 
-    .copy {
-      margin-left: 8px;
-      padding: 6px 8px;
-      border-radius: 6px;
-      background: var(--accent);
-      border: 1px solid #042026;
-      cursor: pointer
-    }
+        .copy {
+            margin-left: 8px;
+            padding: 6px 8px;
+            border-radius: 6px;
+            background: var(--accent);
+            border: 1px solid #042026;
+            cursor: pointer
+        }
 
-    .calc-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 10px;
-      flex-wrap: wrap
-    }
+        .calc-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap
+        }
 
-    .calc-btn {
-      background: rgba(255, 255, 255, .05);
-      color: var(--text);
-      border: 1px solid rgba(255, 255, 255, .05);
-      border-radius: 8px;
-      padding: 8px 14px;
-      cursor: pointer;
-      font-size: 18px;
-      transition: background .2s
-    }
+        .calc-btn {
+            background: rgba(255, 255, 255, .05);
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, .05);
+            border-radius: 8px;
+            padding: 8px 14px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background .2s
+        }
 
-    .calc-btn:hover {
-      background: var(--accent);
-      color: #042026
-    }
+        .calc-btn:hover {
+            background: var(--accent);
+            color: #042026
+        }
 
-    @media (max-width: 600px) {
-      .row {
-        flex-direction: column
-      }
+        @media (max-width: 600px) {
+            .row {
+                flex-direction: column
+            }
 
-      .row input,
-      .row button {
-        width: 100%
-      }
-    }
-  </style>
-  <link rel="manifest" href="manifest.json">
-  <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("service-worker.js");
-    }
-  </script>
+            .row input,
+            .row button {
+                width: 100%
+            }
+        }
+    </style>
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("service-worker.js");
+        }
+    </script>
 </head>
 
 <body>
-  <div class="card" role="main">
-    <h1>Word Converter + Smart Calculator</h1>
+    <div class="card" role="main">
+        <h1>Word Converter + Smart Calculator</h1>
 
-    <div class="tabs">
-      <div class="tab active" id="converterTab">Converter</div>
-      <div class="tab" id="calcTab">Calculator</div>
+        <div class="tabs">
+            <div class="tab active" id="converterTab">Converter</div>
+            <div class="tab" id="calcTab">Calculator</div>
+        </div>
+
+        <!-- Converter Section -->
+        <div id="converterSection">
+            <p class="small">Type any letters from <strong>K A N P U R C I T Y</strong> or numbers to convert them.</p>
+            <div class="row">
+                <input id="wordInput" type="text" placeholder="Enter word or numbers">
+            </div>
+            <div class="result" id="output">Output will appear here</div>
+            <div class="map"><strong>Mapping:</strong> K→0, A→1, N→2, P→3, U→4, R→5, C→6, I→7, T→8, Y→9</div>
+            <div class="note">Auto converts both ways. Case-insensitive.</div>
+            <div style="display:flex;gap:8px;margin-top:12px;align-items:center;justify-content:center">
+                <button id="copyBtn" class="copy">Copy result</button>
+                <button id="clearBtn" class="copy">Clear</button>
+            </div>
+        </div>
+
+        <!-- Smart Calculator Section -->
+        <div id="calculatorSection" class="hidden">
+            <p class="small">Type any expression like <code>12+30/2</code> or <code>(5*4)-3</code>.</p>
+            <div class="row">
+                <input id="calcInput" type="text" placeholder="Enter expression (e.g. 12+30/2)">
+            </div>
+
+            <!-- Calculator Symbol Buttons -->
+            <div class="calc-buttons">
+                <div class="calc-btn">+</div>
+                <div class="calc-btn">-</div>
+                <div class="calc-btn">*</div>
+                <div class="calc-btn">/</div>
+            </div>
+
+            <div class="result" id="calcResult">Result will appear here</div>
+            <div class="note">Auto calculates as you type.</div>
+        </div>
+
+        <footer>❤️ Made by Bipin</footer>
     </div>
 
-    <!-- Converter Section -->
-    <div id="converterSection">
-      <p class="small">Type any letters from <strong>K A N P U R C I T Y</strong> or numbers to convert them.</p>
-      <div class="row">
-        <input id="wordInput" type="text" placeholder="Enter word or numbers">
-      </div>
-      <div class="result" id="output">Output will appear here</div>
-      <div class="map"><strong>Mapping:</strong> K→0, A→1, N→2, P→3, U→4, R→5, C→6, I→7, T→8, Y→9</div>
-      <div class="note">Unknown letters will show as <code>?</code>. Case-insensitive.</div>
-      <div style="display:flex;gap:8px;margin-top:12px;align-items:center;justify-content:center">
-        <button id="copyBtn" class="copy">Copy result</button>
-        <button id="clearBtn" class="copy">Clear</button>
-      </div>
-    </div>
+    <script>
+        // === Tab Switch ===
+        const converterTab = document.getElementById('converterTab');
+        const calcTab = document.getElementById('calcTab');
+        const converterSection = document.getElementById('converterSection');
+        const calculatorSection = document.getElementById('calculatorSection');
 
-    <!-- Smart Calculator Section -->
-    <div id="calculatorSection" class="hidden">
-      <p class="small">Type any expression like <code>12+30/2</code> or <code>(5*4)-3</code>.</p>
-      <div class="row">
-        <input id="calcInput" type="text" placeholder="Enter expression (e.g. 12+30/2)">
-      </div>
+        converterTab.onclick = () => {
+            converterTab.classList.add('active');
+            calcTab.classList.remove('active');
+            converterSection.classList.remove('hidden');
+            calculatorSection.classList.add('hidden');
+        };
+        calcTab.onclick = () => {
+            calcTab.classList.add('active');
+            converterTab.classList.remove('active');
+            calculatorSection.classList.remove('hidden');
+            converterSection.classList.add('hidden');
+        };
 
-      <!-- Calculator Symbol Buttons -->
-      <div class="calc-buttons">
-        <div class="calc-btn">+</div>
-        <div class="calc-btn">-</div>
-        <div class="calc-btn">*</div>
-        <div class="calc-btn">/</div>
-      </div>
+        // === Converter Logic (Fixed) ===
+        const letterToNumber = {
+            'K': '0', 'A': '1', 'N': '2', 'P': '3', 'U': '4', 'R': '5',
+            'C': '6', 'I': '7', 'T': '8', 'Y': '9'
+        };
+        const numberToLetter = {
+            '0': 'K', '1': 'A', '2': 'N', '3': 'P', '4': 'U', '5': 'R',
+            '6': 'C', '7': 'I', '8': 'T', '9': 'Y'
+        };
 
-      <div class="result" id="calcResult">Result will appear here</div>
-      <div class="note">Auto calculates as you type.</div>
-    </div>
+        const input = document.getElementById('wordInput');
+        const out = document.getElementById('output');
+        const copyBtn = document.getElementById('copyBtn');
+        const clearBtn = document.getElementById('clearBtn');
 
-    <footer>❤️ Made by Bipin</footer>
-  </div>
+        input.addEventListener('input', () => {
+            const val = input.value.trim().toUpperCase();
+            if (!val) {
+                out.textContent = 'Output will appear here';
+                return;
+            }
+            let result = '';
+            if (/^[0-9]+$/.test(val)) {
+                for (let ch of val) result += numberToLetter[ch] || '?';
+            } else {
+                for (let ch of val) result += letterToNumber[ch] ?? '?';
+            }
+            out.textContent = 'Output: ' + result;
+        });
 
-  <script>
-    // === Tab Switch ===
-    const converterTab = document.getElementById('converterTab');
-    const calcTab = document.getElementById('calcTab');
-    const converterSection = document.getElementById('converterSection');
-    const calculatorSection = document.getElementById('calculatorSection');
+        copyBtn.addEventListener('click', async () => {
+            const text = out.textContent.replace(/^Output:\s*/, '');
+            try {
+                await navigator.clipboard.writeText(text);
+                copyBtn.textContent = 'Copied!';
+                setTimeout(() => copyBtn.textContent = 'Copy result', 1200);
+            } catch {
+                copyBtn.textContent = 'Copy failed';
+                setTimeout(() => copyBtn.textContent = 'Copy result', 1200);
+            }
+        });
 
-    converterTab.onclick = () => {
-      converterTab.classList.add('active');
-      calcTab.classList.remove('active');
-      converterSection.classList.remove('hidden');
-      calculatorSection.classList.add('hidden');
-    };
-    calcTab.onclick = () => {
-      calcTab.classList.add('active');
-      converterTab.classList.remove('active');
-      calculatorSection.classList.remove('hidden');
-      converterSection.classList.add('hidden');
-    };
+        clearBtn.addEventListener('click', () => {
+            input.value = '';
+            out.textContent = 'Output will appear here';
+            input.focus();
+        });
 
-    // === Converter Logic ===
-    const letterToNumber = {
-      'K': '0', 'A': '1', 'N': '2', 'P': '3', 'U': '4', 'R': '5', 'C': '6', 'I': '7', 'T': '8', 'Y': '9'
-    };
-    const numberToWord = {
-      '0': 'zero', '1': 'one', '2': 'two', '3': 'three', '4': 'four',
-      '5': 'five', '6': 'six', '7': 'seven', '8': 'eight', '9': 'nine'
-    };
+        // === Smart Calculator Logic ===
+        const calcInput = document.getElementById('calcInput');
+        const calcResult = document.getElementById('calcResult');
 
-    const input = document.getElementById('wordInput');
-    const out = document.getElementById('output');
-    const copyBtn = document.getElementById('copyBtn');
-    const clearBtn = document.getElementById('clearBtn');
+        calcInput.addEventListener('input', () => {
+            const expr = calcInput.value.trim();
+            if (!expr) {
+                calcResult.textContent = 'Result will appear here';
+                return;
+            }
+            try {
+                const result = Function('"use strict";return (' + expr + ')')();
+                calcResult.textContent = 'Result: ' + result;
+            } catch {
+                calcResult.textContent = 'Invalid expression';
+            }
+        });
 
-    function convert(word) {
-      if (!word) return 'Enter some letters or numbers';
-      word = word.toUpperCase().replace(/\s+/g, '');
-      const isNumeric = /^[0-9]+$/.test(word);
-      let result = '';
-      if (isNumeric) {
-        result = word.split('').map(num => numberToWord[num] || '?').join(' ');
-      } else {
-        result = word.split('').map(ch => letterToNumber[ch] || '?').join('');
-      }
-      return result;
-    }
-
-    input.addEventListener('input', () => {
-      out.textContent = 'Output: ' + convert(input.value.trim());
-    });
-
-    copyBtn.addEventListener('click', async () => {
-      const text = out.textContent.replace(/^Output:\s*/, '');
-      try {
-        await navigator.clipboard.writeText(text);
-        copyBtn.textContent = 'Copied!';
-        setTimeout(() => copyBtn.textContent = 'Copy result', 1200);
-      } catch {
-        copyBtn.textContent = 'Copy failed';
-        setTimeout(() => copyBtn.textContent = 'Copy result', 1200);
-      }
-    });
-
-    clearBtn.addEventListener('click', () => {
-      input.value = '';
-      out.textContent = 'Output will appear here';
-      input.focus();
-    });
-
-    // === Smart Calculator Logic ===
-    const calcInput = document.getElementById('calcInput');
-    const calcResult = document.getElementById('calcResult');
-
-    calcInput.addEventListener('input', () => {
-      const expr = calcInput.value.trim();
-      if (!expr) { calcResult.textContent = 'Result will appear here'; return; }
-      try {
-        const result = Function('"use strict";return (' + expr + ')')();
-        calcResult.textContent = 'Result: ' + result;
-      } catch {
-        calcResult.textContent = 'Invalid expression';
-      }
-    });
-
-    // === Symbol Buttons Logic ===
-    document.querySelectorAll('.calc-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        calcInput.value += btn.textContent;
-        calcInput.dispatchEvent(new Event('input'));
-        calcInput.focus();
-      });
-    });
-  </script>
+        document.querySelectorAll('.calc-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                calcInput.value += btn.textContent;
+                calcInput.dispatchEvent(new Event('input'));
+                calcInput.focus();
+            });
+        });
+    </script>
 </body>
 
 </html>
