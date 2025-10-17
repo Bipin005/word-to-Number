@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -15,7 +16,7 @@
 
     * {
       box-sizing: border-box;
-      font-family: Inter, system-ui, Segoe UI, Roboto, Arial;
+      font-family: Inter, system-ui, Segoe UI, Roboto, "Helvetica Neue", Arial
     }
 
     body {
@@ -25,137 +26,194 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 18px;
-      color: var(--text);
+      padding: 24px;
+      color: var(--text)
     }
 
     .card {
       width: 100%;
       max-width: 480px;
       background: var(--card);
-      border-radius: 14px;
-      padding: 20px;
+      border-radius: 12px;
+      padding: 22px;
       box-shadow: 0 8px 30px rgba(2, 6, 23, .6);
-      border: 1px solid rgba(255, 255, 255, .03);
+      border: 1px solid rgba(255, 255, 255, .03)
     }
 
     h1 {
-      margin: 0 0 8px;
+      margin: 0 0 6px;
       font-size: 20px;
-      text-align: center;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.2px;
+      text-align: center
     }
 
     p.small {
-      margin: 0 0 16px;
+      margin: 0 0 18px;
       color: var(--muted);
       font-size: 13px;
-      text-align: center;
-      line-height: 1.4;
+      text-align: center
     }
 
+    /* Tabs: keep horizontal, allow scroll on small screens so they don't stack */
     .tabs {
       display: flex;
-      justify-content: space-between;
-      gap: 6px;
+      gap: 10px;
+      justify-content: flex-start;
       margin-bottom: 18px;
+      overflow-x: auto;
+      padding-bottom: 4px
     }
 
     .tab {
-      flex: 1;
-      text-align: center;
-      padding: 10px 0;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, .1);
+      flex: 0 0 auto;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, .08);
       cursor: pointer;
       font-weight: 600;
       background: rgba(255, 255, 255, .03);
       color: var(--muted);
-      font-size: 14px;
-      transition: all .2s;
+      white-space: nowrap
     }
 
     .tab.active {
       background: var(--accent);
       color: #042026;
-      border: none;
+      border: 0
     }
 
     .hidden {
-      display: none;
+      display: none
     }
 
     .row {
       display: flex;
-      flex-direction: column;
       gap: 10px;
+      align-items: center
     }
 
     input[type="text"],
     input[type="number"] {
-      width: 100%;
-      padding: 12px;
+      flex: 1;
+      padding: 12px 14px;
       border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, .05);
+      border: 1px solid rgba(255, 255, 255, .04);
       background: #07182a;
       color: var(--text);
       font-size: 16px;
       outline: none;
+      min-width: 0
+    }
+
+    button {
+      padding: 11px 16px;
+      border-radius: 8px;
+      border: 0;
+      background: var(--accent);
+      color: #042026;
+      font-weight: 700;
+      cursor: pointer
     }
 
     .result {
-      margin-top: 14px;
+      margin-top: 16px;
       padding: 12px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, .03);
-      font-size: 17px;
-      min-height: 42px;
-      text-align: center;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .02);
+      font-size: 18px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      word-break: break-word
     }
 
-    .map, .note {
+    .map {
+      margin-top: 14px;
       color: var(--muted);
-      font-size: 12.5px;
-      text-align: center;
+      font-size: 13px;
+      text-align: center
+    }
+
+    footer {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center
+    }
+
+    .note {
+      color: #ffd166;
+      font-size: 13px;
       margin-top: 8px;
+      text-align: center
+    }
+
+    .copy {
+      margin-left: 8px;
+      padding: 6px 8px;
+      border-radius: 6px;
+      background: var(--accent);
+      border: 1px solid #042026;
+      cursor: pointer
     }
 
     .calc-buttons {
       display: flex;
+      gap: 10px;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 8px;
-      margin-top: 10px;
+      margin-top: 10px
     }
 
     .calc-btn {
       background: rgba(255, 255, 255, .05);
       color: var(--text);
-      border: 1px solid rgba(255, 255, 255, .08);
+      border: 1px solid rgba(255, 255, 255, .05);
       border-radius: 8px;
       padding: 8px 14px;
-      font-size: 17px;
       cursor: pointer;
-      transition: background .2s;
+      font-size: 18px;
+      transition: background .15s
     }
 
     .calc-btn:hover {
       background: var(--accent);
-      color: #042026;
+      color: #042026
     }
 
-    footer {
-      margin-top: 16px;
-      color: var(--muted);
-      font-size: 12px;
-      text-align: center;
+    #savingsText {
+      font-weight: 600;
+      color: var(--accent);
+      margin-top: 10px;
+      text-align: center
     }
 
-    @media (max-width: 480px) {
-      h1 { font-size: 18px; }
-      .tab { font-size: 13px; padding: 8px 0; }
-      input { font-size: 15px; }
-      .result { font-size: 16px; }
+    @media (max-width:480px) {
+      .card {
+        padding: 18px
+      }
+
+      h1 {
+        font-size: 18px
+      }
+
+      .tabs {
+        gap: 8px
+      }
+
+      .tab {
+        padding: 8px 12px;
+        font-size: 13px
+      }
+
+      input {
+        font-size: 15px
+      }
+
+      .result {
+        font-size: 16px
+      }
     }
   </style>
   <link rel="manifest" href="manifest.json">
@@ -165,45 +223,66 @@
       }
   </script>
 </head>
+
 <body>
-  <div class="card">
+  <div class="card" role="main">
     <h1>Word Converter + Smart Calculator</h1>
 
-    <div class="tabs">
-      <div class="tab active" id="converterTab">Converter</div>
-      <div class="tab" id="calcTab">Calculator</div>
-      <div class="tab" id="discountTab">Discount</div>
+    <div class="tabs" role="tablist" aria-label="Tools">
+      <div class="tab active" id="tabConverter" role="tab" tabindex="0">Converter</div>
+      <div class="tab" id="tabCalc" role="tab" tabindex="0">Calculator</div>
+      <div class="tab" id="tabDiscount" role="tab" tabindex="0">Discount</div>
     </div>
 
-    <!-- Converter -->
-    <div id="converterSection">
-      <p class="small">Type any letters from <strong>K A N P U R C I T Y</strong> or numbers.</p>
-      <input id="wordInput" type="text" placeholder="Enter word or numbers">
+    <!-- Converter Section -->
+    <div id="sectionConverter">
+      <p class="small">Type any letters from <strong>K A N P U R C I T Y</strong> or numbers to convert both ways.</p>
+
+      <div class="row" style="margin-top:6px">
+        <input id="wordInput" type="text" placeholder="Enter letters (KAN) or digits (012)">
+      </div>
+
       <div class="result" id="output">Output will appear here</div>
       <div class="map"><strong>Mapping:</strong> K→0, A→1, N→2, P→3, U→4, R→5, C→6, I→7, T→8, Y→9</div>
+
+      <div style="display:flex;gap:8px;margin-top:12px;align-items:center;justify-content:center">
+        <button id="copyBtn" class="copy">Copy result</button>
+        <button id="clearBtn" class="copy">Clear</button>
+      </div>
     </div>
 
-    <!-- Calculator -->
-    <div id="calculatorSection" class="hidden">
-      <p class="small">Type expressions like <code>12+30/2</code> or <code>100%20</code>.</p>
-      <input id="calcInput" type="text" placeholder="Enter expression">
-      <div class="calc-buttons">
+    <!-- Calculator Section -->
+    <div id="sectionCalc" class="hidden">
+      <p class="small">Type expressions like <code>12+30/2</code>, <code>200*10%</code> or <code>100%20</code>.</p>
+
+      <div class="row" style="margin-top:6px">
+        <input id="calcInput" type="text" placeholder="Enter expression (e.g. 12+30/2)">
+      </div>
+
+      <div class="calc-buttons" aria-hidden="false">
         <div class="calc-btn">+</div>
         <div class="calc-btn">-</div>
         <div class="calc-btn">*</div>
         <div class="calc-btn">/</div>
         <div class="calc-btn">%</div>
+        <div class="calc-btn">(</div>
+        <div class="calc-btn">)</div>
       </div>
+
       <div class="result" id="calcResult">Result will appear here</div>
+      <div class="note">Tip: <code>100%20</code> → 20 (20% of 100). <code>200*10%</code> → 20.</div>
     </div>
 
-    <!-- Discount -->
-    <div id="discountSection" class="hidden">
+    <!-- Discount Section -->
+    <div id="sectionDiscount" class="hidden">
       <p class="small">Enter price & discount % to auto calculate final price.</p>
-      <div class="row">
-        <input id="originalPrice" type="number" placeholder="Original Price">
-        <input id="discountPercent" type="number" placeholder="Discount Percentage">
+
+      <div class="row" style="margin-top:6px">
+        <input id="originalPrice" type="number" placeholder="Original Price (₹)">
+        <input id="discountPercent" type="number" placeholder="Discount Percentage (%)">
       </div>
+
+      <div id="savingsText"> </div>
       <div class="result" id="discountResult">Final price will appear here</div>
     </div>
 
@@ -211,82 +290,141 @@
   </div>
 
   <script>
-    // Tab logic
-    const tabs = {
-      converter: document.getElementById('converterTab'),
-      calc: document.getElementById('calcTab'),
-      discount: document.getElementById('discountTab')
-    };
-    const sections = {
-      converter: document.getElementById('converterSection'),
-      calc: document.getElementById('calculatorSection'),
-      discount: document.getElementById('discountSection')
-    };
+    // ----- Tabs logic (keep horizontal; do not convert to vertical) -----
+    const tabConverter = document.getElementById('tabConverter');
+    const tabCalc = document.getElementById('tabCalc');
+    const tabDiscount = document.getElementById('tabDiscount');
 
-    Object.keys(tabs).forEach(tab => {
-      tabs[tab].onclick = () => {
-        Object.values(tabs).forEach(t => t.classList.remove('active'));
-        tabs[tab].classList.add('active');
-        Object.values(sections).forEach(s => s.classList.add('hidden'));
-        sections[tab].classList.remove('hidden');
-      };
-    });
+    const sectionConverter = document.getElementById('sectionConverter');
+    const sectionCalc = document.getElementById('sectionCalc');
+    const sectionDiscount = document.getElementById('sectionDiscount');
 
-    // Converter
-    const letterToNumber = { K:'0',A:'1',N:'2',P:'3',U:'4',R:'5',C:'6',I:'7',T:'8',Y:'9' };
-    const numberToLetter = { 0:'K',1:'A',2:'N',3:'P',4:'U',5:'R',6:'C',7:'I',8:'T',9:'Y' };
-    const input = document.getElementById('wordInput');
-    const out = document.getElementById('output');
-    input.addEventListener('input',()=>{
-      const val=input.value.trim().toUpperCase();
-      if(!val){out.textContent='Output will appear here';return;}
-      let result='';
-      if(/^[0-9]+$/.test(val)){
-        for(let ch of val) result+=numberToLetter[ch]||'?';
-      } else {
-        for(let ch of val) result+=letterToNumber[ch]??'?';
-      }
-      out.textContent='Output: '+result;
-    });
+    function activateTab(tabEl) {
+      // remove active from all
+      [tabConverter, tabCalc, tabDiscount].forEach(t => t.classList.remove('active'));
+      // hide all sections
+      [sectionConverter, sectionCalc, sectionDiscount].forEach(s => s.classList.add('hidden'));
+      // add active and show matching
+      tabEl.classList.add('active');
+      if (tabEl === tabConverter) sectionConverter.classList.remove('hidden');
+      if (tabEl === tabCalc) sectionCalc.classList.remove('hidden');
+      if (tabEl === tabDiscount) sectionDiscount.classList.remove('hidden');
+      // keep the tab visible (scroll if needed)
+      tabEl.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+    }
 
-    // Calculator
-    const calcInput=document.getElementById('calcInput');
-    const calcResult=document.getElementById('calcResult');
-    calcInput.addEventListener('input',()=>{
-      const expr=calcInput.value.trim();
-      if(!expr){calcResult.textContent='Result will appear here';return;}
-      try{
-        const percentExpr=expr.replace(/(\d+)%(\d+)/g,'($1*$2/100)');
-        const result=Function('"use strict";return ('+percentExpr+')')();
-        calcResult.textContent='Result: '+result;
-      }catch{calcResult.textContent='Invalid expression';}
-    });
-    document.querySelectorAll('.calc-btn').forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        calcInput.value+=btn.textContent;
-        calcInput.dispatchEvent(new Event('input'));
+    tabConverter.addEventListener('click', () => activateTab(tabConverter));
+    tabCalc.addEventListener('click', () => activateTab(tabCalc));
+    tabDiscount.addEventListener('click', () => activateTab(tabDiscount));
+
+    // accessibility: Enter key to activate
+    [tabConverter, tabCalc, tabDiscount].forEach(t => {
+      t.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateTab(t); }
       });
     });
 
-    // Discount auto-calc
-    const original=document.getElementById('originalPrice');
-    const discount=document.getElementById('discountPercent');
-    const discountResult=document.getElementById('discountResult');
+    // ----- Converter logic (KANPURCITY) -----
+    const letterToNumber = { 'K': '0', 'A': '1', 'N': '2', 'P': '3', 'U': '4', 'R': '5', 'C': '6', 'I': '7', 'T': '8', 'Y': '9' };
+    const numberToLetter = { '0': 'K', '1': 'A', '2': 'N', '3': 'P', '4': 'U', '5': 'R', '6': 'C', '7': 'I', '8': 'T', '9': 'Y' };
 
-    function updateDiscount(){
-      const price=parseFloat(original.value);
-      const percent=parseFloat(discount.value);
-      if(isNaN(price)||isNaN(percent)){
-        discountResult.textContent='Final price will appear here';
-        return;
+    const wordInput = document.getElementById('wordInput');
+    const output = document.getElementById('output');
+    const copyBtn = document.getElementById('copyBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    function convertWordCode(val) {
+      if (!val) return 'Output will appear here';
+      const s = val.trim().toUpperCase();
+      let res = '';
+      if (/^[0-9]+$/.test(s)) {
+        for (let ch of s) res += numberToLetter[ch] || '?';
+        return res;
+      } else {
+        for (let ch of s) res += letterToNumber[ch] ?? '?';
+        return res;
       }
-      const final=price-(price*percent/100);
-      discountResult.textContent='Final Price: ₹'+final.toFixed(2);
     }
 
-    original.addEventListener('input',updateDiscount);
-    discount.addEventListener('input',updateDiscount);
+    wordInput.addEventListener('input', () => {
+      const v = wordInput.value;
+      const r = convertWordCode(v);
+      output.textContent = (r === '' ? 'Output will appear here' : 'Output: ' + r);
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      const text = output.textContent.replace(/^Output:\s*/, '').trim();
+      try {
+        await navigator.clipboard.writeText(text);
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => copyBtn.textContent = 'Copy result', 1200);
+      } catch {
+        copyBtn.textContent = 'Copy failed';
+        setTimeout(() => copyBtn.textContent = 'Copy result', 1200);
+      }
+    });
+
+    clearBtn.addEventListener('click', () => {
+      wordInput.value = '';
+      output.textContent = 'Output will appear here';
+      wordInput.focus();
+    });
+
+    // ----- Calculator logic (handles both 100%20 and normal percent uses) -----
+    const calcInput = document.getElementById('calcInput');
+    const calcResult = document.getElementById('calcResult');
+
+    function prepareExprForEval(expr) {
+      // 1) Replace A%B where pattern like 100%20 -> (100*20/100)
+      expr = expr.replace(/(\d+(\.\d+)?)\s*%\s*(\d+(\.\d+)?)/g, '($1*$3/100)');
+      // 2) Replace standalone X% with (X/100) so 200*10% => 200*(10/100)
+      expr = expr.replace(/(\d+(\.\d+)?)\s*%/g, '($1/100)');
+      return expr;
+    }
+
+    calcInput.addEventListener('input', () => {
+      const raw = calcInput.value.trim();
+      if (!raw) { calcResult.textContent = 'Result will appear here'; return; }
+      try {
+        const expr = prepareExprForEval(raw);
+        const value = Function('"use strict"; return (' + expr + ')')();
+        calcResult.textContent = 'Result: ' + value;
+      } catch (e) {
+        calcResult.textContent = 'Invalid expression';
+      }
+    });
+
+    // symbol buttons for calc (including parentheses)
+    document.querySelectorAll('.calc-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        calcInput.value += btn.textContent;
+        calcInput.dispatchEvent(new Event('input'));
+        calcInput.focus();
+      });
+    });
+
+    // ----- Discount auto-calc (no button) with "You Saved ₹X" message -----
+    const originalPrice = document.getElementById('originalPrice');
+    const discountPercent = document.getElementById('discountPercent');
+    const discountResult = document.getElementById('discountResult');
+    const savingsText = document.getElementById('savingsText');
+
+    function updateDiscount() {
+      const p = parseFloat(originalPrice.value);
+      const pct = parseFloat(discountPercent.value);
+      if (isNaN(p) || isNaN(pct)) { discountResult.textContent = 'Final price will appear here'; savingsText.textContent = ''; return; }
+      const saved = (p * pct) / 100;
+      const final = p - saved;
+      // show saved plain (no brackets)
+      savingsText.textContent = '🎉 You Saved ₹' + saved.toFixed(2);
+      discountResult.textContent = 'Final Price: ₹' + final.toFixed(2);
+    }
+    originalPrice.addEventListener('input', updateDiscount);
+    discountPercent.addEventListener('input', updateDiscount);
+
+    // ensure initial tab visible
+    activateTab(tabConverter);
   </script>
 </body>
-</html>
 
+</html>
