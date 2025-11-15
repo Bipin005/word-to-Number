@@ -1,430 +1,878 @@
 <!doctype html>
-<html lang="en">
+<html lang="hi">
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Word Converter + Smart Calculator | by Bipin</title>
-  <style>
-    :root {
-      --bg: #0f1724;
-      --card: #0b1220;
-      --accent: #2dd4bf;
-      --muted: #94a3b8;
-      --text: #e6eef6;
-    }
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Word Converter + Smart Calculator + Tracker | by Bipin</title>
+    <style>
+        :root {
+            --bg: #0f1724;
+            --card: #0b1220;
+            --accent: #2dd4bf;
+            --muted: #94a3b8;
+            --text: #e6eef6;
+            --accent-2: #7c3aed;
+            --glass: rgba(255, 255, 255, 0.03);
+        }
 
-    * {
-      box-sizing: border-box;
-      font-family: Inter, system-ui, Segoe UI, Roboto, "Helvetica Neue", Arial
-    }
+        * {
+            box-sizing: border-box;
+        }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: linear-gradient(180deg, #071028 0%, #071b2a 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      color: var(--text)
-    }
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: Inter, system-ui, Segoe UI, Roboto, "Helvetica Neue", Arial;
+            background: linear-gradient(180deg, #071028 0%, #071b2a 100%);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
 
-    .card {
-      width: 100%;
-      max-width: 480px;
-      background: var(--card);
-      border-radius: 12px;
-      padding: 22px;
-      box-shadow: 0 8px 30px rgba(2, 6, 23, .6);
-      border: 1px solid rgba(255, 255, 255, .03)
-    }
+        body {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 20px;
+        }
 
-    h1 {
-      margin: 0 0 6px;
-      font-size: 20px;
-      letter-spacing: 0.2px;
-      text-align: center
-    }
+        .card {
+            width: 100%;
+            max-width: 980px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 12px 40px rgba(2, 6, 23, .7);
+            border: 1px solid rgba(255, 255, 255, .03);
+            overflow: hidden;
+        }
 
-    p.small {
-      margin: 0 0 18px;
-      color: var(--muted);
-      font-size: 13px;
-      text-align: center
-    }
+        .top-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
 
-    /* Tabs: keep horizontal, allow scroll on small screens so they don't stack */
-    .tabs {
-      display: flex;
-      gap: 10px;
-      justify-content: flex-start;
-      margin-bottom: 18px;
-      overflow-x: auto;
-      padding-bottom: 4px
-    }
+        h1 {
+            margin: 0 0 6px;
+            font-size: 20px;
+            letter-spacing: 0.2px;
+            text-align: left
+        }
 
-    .tab {
-      flex: 0 0 auto;
-      padding: 10px 16px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, .08);
-      cursor: pointer;
-      font-weight: 600;
-      background: rgba(255, 255, 255, .03);
-      color: var(--muted);
-      white-space: nowrap
-    }
+        p.small {
+            margin: 0 0 6px;
+            color: var(--muted);
+            font-size: 13px;
+            text-align: left
+        }
 
-    .tab.active {
-      background: var(--accent);
-      color: #042026;
-      border: 0
-    }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin: 12px 0 18px 0;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            -webkit-overflow-scrolling: touch;
+        }
 
-    .hidden {
-      display: none
-    }
+        .tab {
+            flex: 0 0 auto;
+            padding: 10px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            white-space: nowrap;
+        }
 
-    .row {
-      display: flex;
-      gap: 10px;
-      align-items: center
-    }
+        .tab.active {
+            background: var(--accent);
+            color: #042026;
+            border: 0;
+            box-shadow: 0 6px 18px rgba(45, 212, 191, 0.06);
+        }
 
-    input[type="text"],
-    input[type="number"] {
-      flex: 1;
-      padding: 12px 14px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, .04);
-      background: #07182a;
-      color: var(--text);
-      font-size: 16px;
-      outline: none;
-      min-width: 0
-    }
+        .section {
+            display: none;
+        }
 
-    button {
-      padding: 11px 16px;
-      border-radius: 8px;
-      border: 0;
-      background: var(--accent);
-      color: #042026;
-      font-weight: 700;
-      cursor: pointer
-    }
+        .section.active {
+            display: block;
+        }
 
-    .result {
-      margin-top: 16px;
-      padding: 12px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, .02);
-      font-size: 18px;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      word-break: break-word
-    }
+        /* shared inputs */
+        .row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
 
-    .map {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 13px;
-      text-align: center
-    }
+        label {
+            font-size: 13px;
+            color: var(--muted);
+            display: block;
+            margin-bottom: 6px;
+        }
 
-    footer {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 12px;
-      text-align: center
-    }
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        select {
+            flex: 1;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            background: #07182a;
+            color: var(--text);
+            font-size: 15px;
+            min-width: 0;
+            outline: none;
+            box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.01);
+            width: 100%;
+        }
 
-    .note {
-      color: #ffd166;
-      font-size: 13px;
-      margin-top: 8px;
-      text-align: center
-    }
+        button.btn {
+            padding: 11px 16px;
+            border-radius: 10px;
+            border: 0;
+            background: var(--accent);
+            color: #042026;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 8px 18px rgba(45, 212, 191, 0.06);
+        }
 
-    .copy {
-      margin-left: 8px;
-      padding: 6px 8px;
-      border-radius: 6px;
-      background: var(--accent);
-      border: 1px solid #042026;
-      cursor: pointer
-    }
+        button.btn.secondary {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
 
-    .calc-buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 10px
-    }
+        .small-btn {
+            padding: 8px 10px;
+            font-size: 14px;
+            border-radius: 8px;
+        }
 
-    .calc-btn {
-      background: rgba(255, 255, 255, .05);
-      color: var(--text);
-      border: 1px solid rgba(255, 255, 255, .05);
-      border-radius: 8px;
-      padding: 8px 14px;
-      cursor: pointer;
-      font-size: 18px;
-      transition: background .15s
-    }
+        .result {
+            margin-top: 14px;
+            padding: 12px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            font-size: 16px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            word-break: break-word;
+            color: var(--text);
+        }
 
-    .calc-btn:hover {
-      background: var(--accent);
-      color: #042026
-    }
+        .muted {
+            color: var(--muted);
+            font-size: 13px;
+        }
 
-    #savingsText {
-      font-weight: 600;
-      color: var(--accent);
-      margin-top: 10px;
-      text-align: center
-    }
+        .note {
+            color: #ffd166;
+            font-size: 13px;
+            margin-top: 10px;
+            text-align: center;
+        }
 
-    @media (max-width:480px) {
-      .card {
-        padding: 18px
-      }
+        /* Tracker specific styling */
+        .tracker-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            align-items: end;
+        }
 
-      h1 {
-        font-size: 18px
-      }
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
 
-      .tabs {
-        gap: 8px
-      }
+        .cards {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
 
-      .tab {
-        padding: 8px 12px;
-        font-size: 13px
-      }
+        .card-mini {
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: var(--card);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            min-width: 120px;
+        }
 
-      input {
-        font-size: 15px
-      }
+        .card-mini .muted {
+            color: var(--muted);
+            font-size: 12px;
+        }
 
-      .result {
-        font-size: 16px
-      }
-    }
-  </style>
-  <link rel="manifest" href="manifest.json">
-  <script>
-      if ("serviceWorker" in navigator) {
-          navigator.serviceWorker.register("service-worker.js");
-      }
-  </script>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            border-radius: 8px;
+            overflow: hidden;
+            display: block;
+        }
+
+        table thead,
+        table tbody {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        table tbody {
+            max-height: 320px;
+            overflow: auto;
+            display: block;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .chip {
+            padding: 8px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            cursor: pointer;
+            background: transparent;
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        .chip:hover {
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text);
+        }
+
+        .income {
+            color: #7ed957;
+            font-weight: 700;
+        }
+
+        .expense {
+            color: #ff6b6b;
+            font-weight: 700;
+        }
+
+        /* horizontal scroll wrapper for tables on very small screens */
+        .table-wrap {
+            width: 100%;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Responsive rules */
+        @media (max-width:980px) {
+            .tracker-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            table tbody {
+                max-height: 220px;
+            }
+        }
+
+        @media (max-width:640px) {
+            body {
+                padding: 12px;
+            }
+
+            .card {
+                padding: 14px;
+            }
+
+            .tracker-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .top-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .tabs {
+                margin-bottom: 10px;
+            }
+
+            .tab {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+
+            .result {
+                font-size: 15px;
+            }
+
+            table thead {
+                display: none;
+            }
+
+            /* easier mobile rows */
+            table tbody {
+                display: block;
+                max-height: 320px;
+            }
+
+            tr {
+                display: block;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+                padding: 10px 0;
+            }
+
+            td {
+                display: flex;
+                justify-content: space-between;
+                padding: 6px 0;
+                border-bottom: 0;
+            }
+
+            td::before {
+                content: attr(data-label);
+                color: var(--muted);
+                margin-right: 8px;
+                font-weight: 600;
+            }
+
+            .card-mini {
+                min-width: unset;
+                flex: 1 1 45%;
+            }
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+
+            .tab,
+            .chip,
+            button {
+                transition: all .12s ease-in-out;
+            }
+        }
+    </style>
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("service-worker.js");
+        }
+    </script>
 </head>
 
 <body>
-  <div class="card" role="main">
-    <h1>Word Converter + Smart Calculator</h1>
+    <div class="card" role="main">
+        <div class="top-row">
+            <div>
+                <h1>Word Converter + Smart Calculator</h1>
+                <p class="small">Converter, Calculator, Discount aur ab Shop Tracker — sab ek jagah. Made by Bipin</p>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center">
+                <button id="downloadAll" class="btn small-btn" title="Export tracker CSV">Export Tracker CSV</button>
+                <button id="clearAllBtn" class="btn secondary small-btn" title="Clear tracker">Clear Tracker</button>
+            </div>
+        </div>
 
-    <div class="tabs" role="tablist" aria-label="Tools">
-      <div class="tab active" id="tabConverter" role="tab" tabindex="0">Converter</div>
-      <div class="tab" id="tabCalc" role="tab" tabindex="0">Calculator</div>
-      <div class="tab" id="tabDiscount" role="tab" tabindex="0">Discount</div>
+        <div class="tabs" role="tablist" aria-label="Tools">
+            <div class="tab active" data-tab="converter">Converter</div>
+            <div class="tab" data-tab="calc">Calculator</div>
+            <div class="tab" data-tab="discount">Discount</div>
+            <div class="tab" data-tab="tracker">Tracker</div>
+        </div>
+
+        <!-- Converter -->
+        <div id="section-converter" class="section active">
+            <p class="small">Type any letters from <strong>K A N P U R C I T Y</strong> or numbers to convert both ways.
+            </p>
+            <div class="row">
+                <input id="wordInput" type="text" placeholder="Enter letters (KAN) or digits (012)">
+            </div>
+            <div class="result" id="output">Output will appear here</div>
+            <div style="display:flex;gap:8px;justify-content:center;margin-top:12px">
+                <button id="copyBtn" class="btn small-btn">Copy result</button>
+                <button id="clearBtn" class="btn secondary small-btn">Clear</button>
+            </div>
+            <div class="muted" style="margin-top:10px;text-align:center"><strong>Mapping:</strong> K→0, A→1, N→2, P→3,
+                U→4, R→5, C→6, I→7, T→8, Y→9</div>
+        </div>
+
+        <!-- Calculator -->
+        <div id="section-calc" class="section">
+            <p class="small">Type expressions like <code>12+30/2</code>, <code>200*10%</code> or <code>100%20</code>.
+            </p>
+            <div class="row">
+                <input id="calcInput" type="text" placeholder="Enter expression (e.g. 12+30/2)">
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px">
+                <button class="chip">+</button><button class="chip">-</button><button class="chip">*</button><button
+                    class="chip">/</button>
+                <button class="chip">%</button><button class="chip">(</button><button class="chip">)</button>
+            </div>
+            <div class="result" id="calcResult">Result will appear here</div>
+            <div class="note">Tip: <code>100%20</code> → 20 (20% of 100). <code>200*10%</code> → 20.</div>
+        </div>
+
+        <!-- Discount -->
+        <div id="section-discount" class="section">
+            <p class="small">Enter price & discount % to auto calculate final price.</p>
+            <div class="row">
+                <input id="originalPrice" type="number" placeholder="Original Price (₹)">
+                <input id="discountPercent" type="number" placeholder="Discount (%)">
+            </div>
+            <div class="result" id="discountResult">Final price will appear here</div>
+            <div class="muted" id="savingsText"></div>
+        </div>
+
+        <!-- Tracker (new) -->
+        <div id="section-tracker" class="section">
+            <p class="small">Cloth shop ke liye simple tracker — pehle se categories, quick amounts, quantity+unit
+                price, aur CSV export.</p>
+
+            <div class="tracker-grid" style="margin-top:8px">
+                <div>
+                    <label>Tarikh</label>
+                    <input type="date" id="t_date">
+                </div>
+                <div>
+                    <label>Type</label>
+                    <select id="t_type">
+                        <option value="income">Aamdani (Sale)</option>
+                        <option value="expense">Kharcha (Expense)</option>
+                    </select>
+                </div>
+                <div>
+                    <label id="catLabelT">Category</label>
+                    <select id="t_category"></select>
+                </div>
+                <div>
+                    <label>Amount (₹)</label>
+                    <input type="number" id="t_amount" placeholder="Amount" step="0.01" min="0">
+                </div>
+                <div>
+                    <label>Qty (pcs) - agar sale hai</label>
+                    <input type="number" id="t_qty" min="0" placeholder="0">
+                </div>
+                <div>
+                    <label>Unit Price (₹)</label>
+                    <input type="number" id="t_unit" min="0" step="0.01" placeholder="Unit price">
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <label>Note (customer / vendor)</label>
+                    <input type="text" id="t_note" placeholder="Note (optional)">
+                </div>
+
+                <div style="display:flex;gap:8px;align-items:center;grid-column:1 / -1;flex-wrap:wrap">
+                    <input id="t_newCat" type="text" placeholder="Nayi category add karein (type aur press Add)"
+                        style="flex:1; min-width:120px;">
+                    <button id="t_addCat" class="btn secondary small-btn">Add</button>
+
+                    <div style="margin-left:auto;display:flex;gap:8px;">
+                        <button id="t_add" class="btn small-btn">Record Karein</button>
+                        <button id="t_reset" class="btn secondary small-btn">Reset</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap">
+                <div class="chip" data-amt="100">₹100</div>
+                <div class="chip" data-amt="250">₹250</div>
+                <div class="chip" data-amt="500">₹500</div>
+                <div class="chip" data-amt="1000">₹1000</div>
+                <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
+                    <select id="t_filter"
+                        style="padding:10px;border-radius:8px;background:#07182a;color:var(--text);border:1px solid rgba(255,255,255,0.04);">
+                        <option value="all">Sab</option>
+                        <option value="today">Aaj</option>
+                        <option value="week">Is Hafte</option>
+                        <option value="month">Is Mahine</option>
+                    </select>
+                    <button id="t_export" class="btn small-btn">Export (Visible)</button>
+                </div>
+            </div>
+
+            <div class="cards" id="t_summary" style="margin-top:12px;">
+                <div class="card-mini">
+                    <div class="muted">Total Balance</div>
+                    <div id="t_balance">₹0.00</div>
+                </div>
+                <div class="card-mini">
+                    <div class="muted">Income</div>
+                    <div id="t_income">₹0.00</div>
+                </div>
+                <div class="card-mini">
+                    <div class="muted">Expense</div>
+                    <div id="t_expense">₹0.00</div>
+                </div>
+                <div class="card-mini">
+                    <div class="muted">Records</div>
+                    <div id="t_count">0</div>
+                </div>
+            </div>
+
+            <div class="table-wrap" style="margin-top:10px;">
+                <table id="t_table" aria-describedby="tracker-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <footer style="margin-top:14px;color:var(--muted);font-size:13px;text-align:center">❤️ Made by Bipin</footer>
     </div>
 
-    <!-- Converter Section -->
-    <div id="sectionConverter">
-      <p class="small">Type any letters from <strong>K A N P U R C I T Y</strong> or numbers to convert both ways.</p>
+    <script>
+        // ---------------- Tabs ----------------
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                tab.classList.add('active');
+                const name = tab.dataset.tab;
+                document.getElementById('section-' + name).classList.add('active');
+                tab.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+            });
+        });
 
-      <div class="row" style="margin-top:6px">
-        <input id="wordInput" type="text" placeholder="Enter letters (KAN) or digits (012)">
-      </div>
+        // ---------------- Converter ----------------
+        const letterToNumber = { 'K': '0', 'A': '1', 'N': '2', 'P': '3', 'U': '4', 'R': '5', 'C': '6', 'I': '7', 'T': '8', 'Y': '9' };
+        const numberToLetter = { '0': 'K', '1': 'A', '2': 'N', '3': 'P', '4': 'U', '5': 'R', '6': 'C', '7': 'I', '8': 'T', '9': 'Y' };
+        const wordInput = document.getElementById('wordInput');
+        const output = document.getElementById('output');
+        const copyBtn = document.getElementById('copyBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        function convertWordCode(val) {
+            if (!val) return 'Output will appear here';
+            const s = val.trim().toUpperCase();
+            let res = '';
+            if (/^[0-9]+$/.test(s)) {
+                for (let ch of s) res += numberToLetter[ch] || '?';
+                return res;
+            } else {
+                for (let ch of s) res += letterToNumber[ch] ?? '?';
+                return res;
+            }
+        }
+        wordInput.addEventListener('input', () => {
+            const v = wordInput.value;
+            const r = convertWordCode(v);
+            output.textContent = (r === '' ? 'Output will appear here' : 'Output: ' + r);
+        });
+        copyBtn.addEventListener('click', async () => {
+            const text = output.textContent.replace(/^Output:\s*/, '').trim();
+            try {
+                await navigator.clipboard.writeText(text);
+                copyBtn.textContent = 'Copied!';
+                setTimeout(() => copyBtn.textContent = 'Copy result', 1200);
+            } catch {
+                copyBtn.textContent = 'Copy failed';
+                setTimeout(() => copyBtn.textContent = 'Copy result', 1200);
+            }
+        });
+        clearBtn.addEventListener('click', () => {
+            wordInput.value = '';
+            output.textContent = 'Output will appear here';
+            wordInput.focus();
+        });
 
-      <div class="result" id="output">Output will appear here</div>
-      <div class="map"><strong>Mapping:</strong> K→0, A→1, N→2, P→3, U→4, R→5, C→6, I→7, T→8, Y→9</div>
+        // ---------------- Calculator ----------------
+        const calcInput = document.getElementById('calcInput');
+        const calcResult = document.getElementById('calcResult');
+        function prepareExprForEval(expr) {
+            expr = expr.replace(/(\d+(\.\d+)?)\s*%\s*(\d+(\.\d+)?)/g, '($1*$3/100)');
+            expr = expr.replace(/(\d+(\.\d+)?)\s*%/g, '($1/100)');
+            return expr;
+        }
+        if (calcInput) {
+            calcInput.addEventListener('input', () => {
+                const raw = calcInput.value.trim();
+                if (!raw) { calcResult.textContent = 'Result will appear here'; return; }
+                try {
+                    const expr = prepareExprForEval(raw);
+                    const value = Function('"use strict"; return (' + expr + ')')();
+                    calcResult.textContent = 'Result: ' + value;
+                } catch (e) {
+                    calcResult.textContent = 'Invalid expression';
+                }
+            });
+            document.querySelectorAll('#section-calc .chip').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    calcInput.value += btn.textContent;
+                    calcInput.dispatchEvent(new Event('input'));
+                    calcInput.focus();
+                });
+            });
+        }
 
-      <div style="display:flex;gap:8px;margin-top:12px;align-items:center;justify-content:center">
-        <button id="copyBtn" class="copy">Copy result</button>
-        <button id="clearBtn" class="copy">Clear</button>
-      </div>
-    </div>
+        // ---------------- Discount ----------------
+        const originalPrice = document.getElementById('originalPrice');
+        const discountPercent = document.getElementById('discountPercent');
+        const discountResult = document.getElementById('discountResult');
+        const savingsText = document.getElementById('savingsText');
+        function updateDiscount() {
+            const p = parseFloat(originalPrice.value);
+            const pct = parseFloat(discountPercent.value);
+            if (isNaN(p) || isNaN(pct)) { discountResult.textContent = 'Final price will appear here'; savingsText.textContent = ''; return; }
+            const saved = (p * pct) / 100;
+            const final = p - saved;
+            savingsText.textContent = '🎉 You Saved ₹' + saved.toFixed(2);
+            discountResult.textContent = 'Final Price: ₹' + final.toFixed(2);
+        }
+        if (originalPrice) originalPrice.addEventListener('input', updateDiscount);
+        if (discountPercent) discountPercent.addEventListener('input', updateDiscount);
 
-    <!-- Calculator Section -->
-    <div id="sectionCalc" class="hidden">
-      <p class="small">Type expressions like <code>12+30/2</code>, <code>200*10%</code> or <code>100%20</code>.</p>
+        // ---------------- Tracker ----------------
+        const LS_KEY = 'bipin_cloth_tracker_v1';
+        const CAT_KEY = 'bipin_cloth_cats_v1';
 
-      <div class="row" style="margin-top:6px">
-        <input id="calcInput" type="text" placeholder="Enter expression (e.g. 12+30/2)">
-      </div>
+        const t_date = document.getElementById('t_date');
+        const t_type = document.getElementById('t_type');
+        const t_category = document.getElementById('t_category');
+        const t_amount = document.getElementById('t_amount');
+        const t_qty = document.getElementById('t_qty');
+        const t_unit = document.getElementById('t_unit');
+        const t_note = document.getElementById('t_note');
+        const t_newCat = document.getElementById('t_newCat');
+        const t_addCat = document.getElementById('t_addCat');
+        const t_add = document.getElementById('t_add');
+        const t_reset = document.getElementById('t_reset');
+        const t_table = document.querySelector('#t_table tbody');
+        const t_filter = document.getElementById('t_filter');
+        const t_export = document.getElementById('t_export');
 
-      <div class="calc-buttons" aria-hidden="false">
-        <div class="calc-btn">+</div>
-        <div class="calc-btn">-</div>
-        <div class="calc-btn">*</div>
-        <div class="calc-btn">/</div>
-        <div class="calc-btn">%</div>
-        <div class="calc-btn">(</div>
-        <div class="calc-btn">)</div>
-      </div>
+        const t_balance = document.getElementById('t_balance');
+        const t_income = document.getElementById('t_income');
+        const t_expense = document.getElementById('t_expense');
+        const t_count = document.getElementById('t_count');
 
-      <div class="result" id="calcResult">Result will appear here</div>
-      <div class="note">Tip: <code>100%20</code> → 20 (20% of 100). <code>200*10%</code> → 20.</div>
-    </div>
+        const defaultIncome = ['Sales - Retail', 'Sales - Wholesale', 'Alteration Charges', 'Other Income'];
+        const defaultExpense = ['Shop Rent', 'Staff Salary', 'Kharid - Stock Purchase', 'Bijli Bill', 'Packaging', 'Marketing', 'Other Expense'];
 
-    <!-- Discount Section -->
-    <div id="sectionDiscount" class="hidden">
-      <p class="small">Enter price & discount % to auto calculate final price.</p>
+        let records = loadRecords();
+        let cats = loadCats();
+        let currentFilter = 'all';
 
-      <div class="row" style="margin-top:6px">
-        <input id="originalPrice" type="number" placeholder="Original Price (₹)">
-        <input id="discountPercent" type="number" placeholder="Discount Percentage (%)">
-      </div>
+        // init
+        t_date.valueAsDate = new Date();
+        renderCats();
+        updateSaleFields();
+        renderTracker();
 
-      <div id="savingsText"> </div>
-      <div class="result" id="discountResult">Final price will appear here</div>
-    </div>
+        // Events
+        t_type.addEventListener('change', () => { renderCats(); updateSaleFields(); });
+        t_addCat.addEventListener('click', addCategory);
+        t_add.addEventListener('click', addRecord);
+        t_reset.addEventListener('click', resetTrackerInputs);
+        document.querySelectorAll('#section-tracker .chip').forEach(c => c.addEventListener('click', () => t_amount.value = c.dataset.amt));
+        t_filter.addEventListener('change', () => { currentFilter = t_filter.value; renderTracker(); });
+        t_export.addEventListener('click', () => downloadCSV(filteredRecords()));
+        document.getElementById('downloadAll').addEventListener('click', () => downloadCSV(records));
+        document.getElementById('clearAllBtn').addEventListener('click', () => { if (confirm('Sare tracker records delete karein?')) { records = []; saveRecords(); renderTracker(); } });
 
-    <footer>❤️ Made by Bipin</footer>
-  </div>
+        // functions: storage
+        function loadRecords() {
+            try {
+                const raw = localStorage.getItem(LS_KEY);
+                return raw ? JSON.parse(raw) : [];
+            } catch (e) { console.error(e); return []; }
+        }
+        function saveRecords() { localStorage.setItem(LS_KEY, JSON.stringify(records)); }
 
-  <script>
-    // ----- Tabs logic (keep horizontal; do not convert to vertical) -----
-    const tabConverter = document.getElementById('tabConverter');
-    const tabCalc = document.getElementById('tabCalc');
-    const tabDiscount = document.getElementById('tabDiscount');
+        function loadCats() {
+            try {
+                const raw = localStorage.getItem(CAT_KEY);
+                if (raw) return JSON.parse(raw);
+                const init = { income: defaultIncome.slice(), expense: defaultExpense.slice() };
+                localStorage.setItem(CAT_KEY, JSON.stringify(init));
+                return init;
+            } catch (e) { console.error(e); return { income: defaultIncome.slice(), expense: defaultExpense.slice() }; }
+        }
+        function saveCats() { localStorage.setItem(CAT_KEY, JSON.stringify(cats)); }
 
-    const sectionConverter = document.getElementById('sectionConverter');
-    const sectionCalc = document.getElementById('sectionCalc');
-    const sectionDiscount = document.getElementById('sectionDiscount');
+        function renderCats() {
+            t_category.innerHTML = '';
+            const list = (t_type.value === 'income') ? (cats.income || []) : (cats.expense || []);
+            for (const c of list) {
+                const opt = document.createElement('option'); opt.value = c; opt.textContent = c; t_category.appendChild(opt);
+            }
+            document.getElementById('catLabelT').textContent = (t_type.value === 'income' ? 'Income Category' : 'Expense Category');
+        }
 
-    function activateTab(tabEl) {
-      // remove active from all
-      [tabConverter, tabCalc, tabDiscount].forEach(t => t.classList.remove('active'));
-      // hide all sections
-      [sectionConverter, sectionCalc, sectionDiscount].forEach(s => s.classList.add('hidden'));
-      // add active and show matching
-      tabEl.classList.add('active');
-      if (tabEl === tabConverter) sectionConverter.classList.remove('hidden');
-      if (tabEl === tabCalc) sectionCalc.classList.remove('hidden');
-      if (tabEl === tabDiscount) sectionDiscount.classList.remove('hidden');
-      // keep the tab visible (scroll if needed)
-      tabEl.scrollIntoView({ behavior: 'smooth', inline: 'center' });
-    }
+        function addCategory() {
+            const name = t_newCat.value.trim();
+            if (!name) return alert('Category ka naam daaliye');
+            const key = (t_type.value === 'income') ? 'income' : 'expense';
+            if (!cats[key]) cats[key] = [];
+            if (cats[key].includes(name)) { alert('Category pehle se hai'); t_newCat.value = ''; return; }
+            cats[key].push(name);
+            saveCats();
+            t_newCat.value = '';
+            renderCats();
+            t_category.value = name;
+        }
 
-    tabConverter.addEventListener('click', () => activateTab(tabConverter));
-    tabCalc.addEventListener('click', () => activateTab(tabCalc));
-    tabDiscount.addEventListener('click', () => activateTab(tabDiscount));
+        function updateSaleFields() {
+            // ensure the parent containers exist and show/hide properly
+            if (t_type.value === 'income') {
+                if (t_qty) t_qty.parentElement.style.display = '';
+                if (t_unit) t_unit.parentElement.style.display = '';
+            } else {
+                if (t_qty) t_qty.parentElement.style.display = 'none';
+                if (t_unit) t_unit.parentElement.style.display = 'none';
+            }
+        }
 
-    // accessibility: Enter key to activate
-    [tabConverter, tabCalc, tabDiscount].forEach(t => {
-      t.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateTab(t); }
-      });
-    });
+        function addRecord() {
+            const date = t_date.value;
+            const type = t_type.value;
+            const category = t_category.value || (type === 'income' ? 'Sales - Retail' : 'Other Expense');
+            let amount = parseFloat(t_amount.value) || 0;
+            const qty = Number(t_qty.value) || 0;
+            const unit = parseFloat(t_unit.value) || 0;
+            const note = t_note.value.trim();
 
-    // ----- Converter logic (KANPURCITY) -----
-    const letterToNumber = { 'K': '0', 'A': '1', 'N': '2', 'P': '3', 'U': '4', 'R': '5', 'C': '6', 'I': '7', 'T': '8', 'Y': '9' };
-    const numberToLetter = { '0': 'K', '1': 'A', '2': 'N', '3': 'P', '4': 'U', '5': 'R', '6': 'C', '7': 'I', '8': 'T', '9': 'Y' };
+            if (type === 'income' && qty > 0 && unit > 0 && (!amount || amount === 0)) {
+                amount = Number((qty * unit).toFixed(2));
+            }
 
-    const wordInput = document.getElementById('wordInput');
-    const output = document.getElementById('output');
-    const copyBtn = document.getElementById('copyBtn');
-    const clearBtn = document.getElementById('clearBtn');
+            if (!date || !amount || amount <= 0) { alert('Tarikh aur valid amount zaroori hai'); return; }
 
-    function convertWordCode(val) {
-      if (!val) return 'Output will appear here';
-      const s = val.trim().toUpperCase();
-      let res = '';
-      if (/^[0-9]+$/.test(s)) {
-        for (let ch of s) res += numberToLetter[ch] || '?';
-        return res;
-      } else {
-        for (let ch of s) res += letterToNumber[ch] ?? '?';
-        return res;
-      }
-    }
+            const rec = { id: Date.now(), date, type, category, amount, note };
+            records.push(rec);
+            records.sort((a, b) => new Date(b.date) - new Date(a.date));
+            saveRecords();
+            resetTrackerInputs();
+            renderTracker();
+            // small confirmation without blocking UX
+            const toast = document.createElement('div'); toast.textContent = 'Record add ho gaya'; toast.style.position = 'fixed'; toast.style.bottom = '18px'; toast.style.left = '50%'; toast.style.transform = 'translateX(-50%)'; toast.style.background = 'rgba(0,0,0,0.6)'; toast.style.color = '#fff'; toast.style.padding = '8px 12px'; toast.style.borderRadius = '8px'; toast.style.zIndex = 9999; document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 1200);
+        }
 
-    wordInput.addEventListener('input', () => {
-      const v = wordInput.value;
-      const r = convertWordCode(v);
-      output.textContent = (r === '' ? 'Output will appear here' : 'Output: ' + r);
-    });
+        function resetTrackerInputs() {
+            t_date.valueAsDate = new Date();
+            t_amount.value = '';
+            t_qty.value = '';
+            t_unit.value = '';
+            t_note.value = '';
+            t_newCat.value = '';
+        }
 
-    copyBtn.addEventListener('click', async () => {
-      const text = output.textContent.replace(/^Output:\s*/, '').trim();
-      try {
-        await navigator.clipboard.writeText(text);
-        copyBtn.textContent = 'Copied!';
-        setTimeout(() => copyBtn.textContent = 'Copy result', 1200);
-      } catch {
-        copyBtn.textContent = 'Copy failed';
-        setTimeout(() => copyBtn.textContent = 'Copy result', 1200);
-      }
-    });
+        function filteredRecords() {
+            const now = new Date();
+            if (currentFilter === 'all') return records.slice();
+            if (currentFilter === 'today') {
+                const yyyy = now.getFullYear(), mm = now.getMonth(), dd = now.getDate();
+                return records.filter(r => { const d = new Date(r.date); return d.getFullYear() === yyyy && d.getMonth() === mm && d.getDate() === dd; });
+            }
+            if (currentFilter === 'month') {
+                const yyyy = now.getFullYear(), mm = now.getMonth();
+                return records.filter(r => { const d = new Date(r.date); return d.getFullYear() === yyyy && d.getMonth() === mm; });
+            }
+            if (currentFilter === 'week') {
+                const start = new Date(now); const day = now.getDay(); const diff = (day + 6) % 7; start.setDate(now.getDate() - diff); start.setHours(0, 0, 0, 0);
+                const end = new Date(start); end.setDate(start.getDate() + 6); end.setHours(23, 59, 59, 999);
+                return records.filter(r => { const d = new Date(r.date); return d >= start && d <= end; });
+            }
+            return records.slice();
+        }
 
-    clearBtn.addEventListener('click', () => {
-      wordInput.value = '';
-      output.textContent = 'Output will appear here';
-      wordInput.focus();
-    });
+        function renderTracker() {
+            const list = filteredRecords();
+            t_table.innerHTML = '';
+            let income = 0, expense = 0;
 
-    // ----- Calculator logic (handles both 100%20 and normal percent uses) -----
-    const calcInput = document.getElementById('calcInput');
-    const calcResult = document.getElementById('calcResult');
+            for (const r of list) {
+                const tr = document.createElement('tr');
+                const dateTd = document.createElement('td'); dateTd.textContent = formatDate(r.date); dateTd.setAttribute('data-label', 'Date');
+                const typeTd = document.createElement('td'); typeTd.textContent = (r.type === 'income' ? 'Sale' : 'Expense'); typeTd.setAttribute('data-label', 'Type');
+                const catTd = document.createElement('td'); catTd.textContent = r.category; catTd.setAttribute('data-label', 'Category');
+                const amtTd = document.createElement('td'); amtTd.textContent = '₹' + numberFormat(r.amount); amtTd.setAttribute('data-label', 'Amount');
+                const noteTd = document.createElement('td'); noteTd.textContent = r.note || ''; noteTd.setAttribute('data-label', 'Note');
 
-    function prepareExprForEval(expr) {
-      // 1) Replace A%B where pattern like 100%20 -> (100*20/100)
-      expr = expr.replace(/(\d+(\.\d+)?)\s*%\s*(\d+(\.\d+)?)/g, '($1*$3/100)');
-      // 2) Replace standalone X% with (X/100) so 200*10% => 200*(10/100)
-      expr = expr.replace(/(\d+(\.\d+)?)\s*%/g, '($1/100)');
-      return expr;
-    }
+                if (r.type === 'income') amtTd.classList.add('income'); else amtTd.classList.add('expense');
 
-    calcInput.addEventListener('input', () => {
-      const raw = calcInput.value.trim();
-      if (!raw) { calcResult.textContent = 'Result will appear here'; return; }
-      try {
-        const expr = prepareExprForEval(raw);
-        const value = Function('"use strict"; return (' + expr + ')')();
-        calcResult.textContent = 'Result: ' + value;
-      } catch (e) {
-        calcResult.textContent = 'Invalid expression';
-      }
-    });
+                tr.appendChild(dateTd); tr.appendChild(typeTd); tr.appendChild(catTd); tr.appendChild(amtTd); tr.appendChild(noteTd);
+                t_table.appendChild(tr);
 
-    // symbol buttons for calc (including parentheses)
-    document.querySelectorAll('.calc-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        calcInput.value += btn.textContent;
-        calcInput.dispatchEvent(new Event('input'));
-        calcInput.focus();
-      });
-    });
+                if (r.type === 'income') income += r.amount; else expense += r.amount;
+            }
 
-    // ----- Discount auto-calc (no button) with "You Saved ₹X" message -----
-    const originalPrice = document.getElementById('originalPrice');
-    const discountPercent = document.getElementById('discountPercent');
-    const discountResult = document.getElementById('discountResult');
-    const savingsText = document.getElementById('savingsText');
+            t_income.textContent = '₹' + numberFormat(income);
+            t_expense.textContent = '₹' + numberFormat(expense);
+            const bal = income - expense;
+            t_balance.textContent = (bal >= 0 ? '₹' + numberFormat(bal) : '-₹' + numberFormat(Math.abs(bal)));
+            t_count.textContent = list.length;
+        }
 
-    function updateDiscount() {
-      const p = parseFloat(originalPrice.value);
-      const pct = parseFloat(discountPercent.value);
-      if (isNaN(p) || isNaN(pct)) { discountResult.textContent = 'Final price will appear here'; savingsText.textContent = ''; return; }
-      const saved = (p * pct) / 100;
-      const final = p - saved;
-      // show saved plain (no brackets)
-      savingsText.textContent = '🎉 You Saved ₹' + saved.toFixed(2);
-      discountResult.textContent = 'Final Price: ₹' + final.toFixed(2);
-    }
-    originalPrice.addEventListener('input', updateDiscount);
-    discountPercent.addEventListener('input', updateDiscount);
+        function formatDate(d) {
+            const dt = new Date(d);
+            return dt.toLocaleDateString('en-GB');
+        }
+        function numberFormat(n) { return Number(n).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 
-    // ensure initial tab visible
-    activateTab(tabConverter);
-  </script>
+        function downloadCSV(array) {
+            if (!array || !array.length) { alert('Koi record nahi hai export ke liye'); return; }
+            const header = ['id', 'date', 'type', 'category', 'amount', 'note'];
+            const rows = array.map(r => header.map(h => JSON.stringify(r[h] ?? '')).join(','));
+            const csv = [header.join(',')].concat(rows).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = 'tracker_records.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+        }
+
+        // ensure initial tab is converter
+        document.querySelector('.tab.active').click();
+
+        // save initial cats in storage if missing
+        // (loadCats already writes defaults if missing)
+        saveCats(); // uses the defined saveCats
+
+    </script>
 </body>
 
 </html>
